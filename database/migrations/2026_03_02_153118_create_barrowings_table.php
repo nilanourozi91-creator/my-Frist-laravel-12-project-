@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('bring_date')->nullable();
             $table->enum('stutas',['returned','barrowed','overdue'])->default('barrowed');
             $table->timestamps();
-
             $table->index(['member_id','stutas']);
             $table->index(['due_date']);
         });
