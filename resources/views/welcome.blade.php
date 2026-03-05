@@ -6,6 +6,8 @@
 
         <title>Laravel Bookstore</title>
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net" rel="stylesheet" />
@@ -50,7 +52,9 @@
                         Your application is ready for development.
                     </p>
                 </main>
-
+                     <h1 class=" text-red-950">
+                        wellcome to laravel 12 
+                     </h1>
                 <footer class="py-16 text-center text-sm text-gray-500">
                     Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                 </footer>

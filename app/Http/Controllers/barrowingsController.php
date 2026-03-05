@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\barrowing;
 use Illuminate\Http\Request;
 
 class barrowingsController extends Controller
@@ -11,7 +12,12 @@ class barrowingsController extends Controller
      */
     public function index()
     {
-        //
+        $baro=barrowing::all();
+        return response()->json(
+            [
+                'res'=>$baro
+            ]
+        );
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,6 @@ class barrowing extends Model
         return $this->belongsTo(member::class);
     }
     public function overDue(){
-         $this->due_date>carbon::today() && $this->stutas==='barrowed';
+         $this->due_date>Carbon::today() && $this->stutas==='barrowed';
     }
 }
