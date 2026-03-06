@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthorInsertRequest;
+use App\Http\Resources\authorResours;
 use App\Models\authore;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthoreController extends Controller
 {
@@ -12,52 +16,31 @@ class AuthoreController extends Controller
      */
     public function index()
     {
-       $author=authore::all();
-       return response()->json(
-        [
-            'author'=>$author
-        ]
-       );
-
+       $authors=authore::all();
+       return new authorResours($authors);
+       
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AuthorInsertRequest $request)
 {
-    // مطمئن شو مدل Author درست است و حرف اول بزرگ است
-    $author = authore::create([
-        'name' => $request->name,
-        'bio' => $request->bio,
-        'nationality' => $request->nationality,
-    ]);
+   
+    $author = authore::create($request->validated());
 
-    return response()->json([
-        'new' => $author
-    ]);
+    return new authorResours($author);
+    
 }
-    // public function store(Request $request)
-    // {
-    //     //
-    //         $author=authore::created([
-    //         'name'=> $request->name,
-    //         'bio'=>$request->bio,
-    //         'nationality'=>$request->nationality,
-    //     ]);
-    //     return response()->json(
-    //         [
-    //             'new'=>$author
-    //         ]
-    //     );
-    // }
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-      
+     $responses= authore::findOrfail($id);
+      return Response()->json([
+          'showdata'=>$responses
+      ]);
     }
 
     /**
