@@ -15,9 +15,13 @@ class authorResours extends JsonResource
     public function toArray(Request $request): array
     {
          return [
-            "name"=>'required|string|max:40|min:3',
-            "bio"=>'nullable|string',
-            "nationality"=>'nullable|string'
+            // "name"=>'required|string|max:40|min:3',
+            // "bio"=>'nullable|string',
+            // "nationality"=>'nullable|string'
+            'name'=>$this->name,
+            'bio'=>$this->bio,
+            'nationality'=>$this->nationality,
+            'books'=>count($this->books)
         ];
     }
 }

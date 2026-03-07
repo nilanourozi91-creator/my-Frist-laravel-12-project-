@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthorInsertRequest extends FormRequest
+class bookrequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,13 +19,19 @@ class AuthorInsertRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    
     public function rules(): array
     {
         return [
-            "name"=>'required|string|max:40|min:3',
-            "bio"=>'nullable|string',
-            "nationality"=>'nullable|string'
-        
+            'title'=>'required|string|max:60|min:10',
+            'isbn'=>'nullable|string',
+            'description'=>'string|nullable',
+            'author_id'=>'required|exists:authoore,id',
+            'genra'=>'string|nullable',
+            'avalible_copies'=>'required|integer',
+            'tottle_copies'=>'required|integer',
+            'published_at'=>'date|required',
+            'cover_imges'=>'string|required'
         ];
     }
 }

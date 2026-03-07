@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthorInsertRequest extends FormRequest
+class memberinsertrequst extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class AuthorInsertRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name"=>'required|string|max:40|min:3',
-            "bio"=>'nullable|string',
-            "nationality"=>'nullable|string'
-        
+            //
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthoreController;
 use App\Http\Controllers\barrowingsController;
+use App\Http\Controllers\bookController;
+use App\Http\Controllers\memberController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,3 +12,5 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 route::apiResource('author' , AuthoreController::class);
 route::apiResource('bro', barrowingsController::class);
+Route::apiResource('books',bookController::class);
+Route::apiResource('member',memberController::class);
