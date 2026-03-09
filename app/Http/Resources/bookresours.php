@@ -21,7 +21,7 @@ class bookresours extends JsonResource
             'description'=>$this->description,
             'author'=>new authorResours($this->whenLoaded("author")),
             'genra'=>$this->genra,
-            'avalible_copies'=>$this->isAvelible(),
+            'avalible_copies'=>$this->avalible_copies,
             'tottle_copies'=>$this->tottle_copies,
             'published_at'=>$this->published_at,
             'cover_imges'=>$this->cover_imges,

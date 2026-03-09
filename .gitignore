@@ -26,3 +26,4 @@ Thumbs.db
 /node_modules
 /public/build
 /.env
+/app/generated/prisma

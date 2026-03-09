@@ -5,7 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class authorResours extends JsonResource
+class memberRsoures extends JsonResource
+// name	email	addrass	whatsapp	statues	membership_date
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +15,13 @@ class authorResours extends JsonResource
      */
     public function toArray(Request $request): array
     {
-         return [
+        return [
             'name'=>$this->name,
-            'bio'=>$this->bio,
-            'nationality'=>$this->nationality,
-            'books'=>count($this->book)
+            'email'=>$this->email,
+            'addrass'=>$this->addrass,
+            'whatsapp'=>$this->whatsapp,
+            'statuse'=>$this->statuse,
+            'membership_date'=>$this->membership_date,
         ];
     }
 }

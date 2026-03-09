@@ -17,8 +17,14 @@ class AuthoreController extends Controller
      */
     public function index()
     {
-       $authors=authore::with("books");
-       return new authorResours($authors);
+    //    $authors=authore::with("book");
+    //    return new authorResours($authors);
+    $author=authore::all();
+    return response()->json(
+        [
+           'allAuthor'=>$author
+        ]
+    );
        
     }
 
@@ -39,8 +45,12 @@ class AuthoreController extends Controller
     public function show(string $id)
     {
      $responses= authore::findOrfail($id);
-      return new authorResours($responses);
-          
+    //   return new authorResours($responses);
+          return response()->json(
+           [
+            'showauthor'=>$responses
+           ]
+          );
     }
 
     /**

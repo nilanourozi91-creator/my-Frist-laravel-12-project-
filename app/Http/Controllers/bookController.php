@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\bookrequest;
+use App\Http\Resources\authorResours;
 use App\Http\Resources\bookresours;
 use App\Models\book;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class bookController extends Controller
      */
     public function index()
     {
-       $allbooks= book::with('author')->get();
+       $allbooks= book::with('author');
        return  bookresours::collection($allbooks);
     }
 
@@ -23,9 +24,23 @@ class bookController extends Controller
      */
     public function store(bookrequest $request)
     {
-        $sbooks=book::created($request->validated());
-        return bookresours::collection($sbooks);
-         $sbooks::load('author');
+        $sbooks=book::created($request);
+        // return bookresours
+        // return response()->json([
+        //     'title'=>$request->title,
+        //     'isbn'=>$request->isbn,
+        //     'description'=>$request->description,
+        //     'author'=>new authorResours($request->whenLoaded("authore")),
+        //     'genra'=>$request->genra,
+        //     'avalible_copies'=>$request->avalible_copies,
+        //     'tottle_copies'=>$request->tottle_copies,
+        //     'published_at'=>$request->published_at,
+        //     'cover_imges'=>$request->cover_imges,
+        //     'statuse'=>$request->statuse
+        // ]);
+        return new bookresours($sbooks);
+        // $sbooks::load('author');
+
     }
 
     /**

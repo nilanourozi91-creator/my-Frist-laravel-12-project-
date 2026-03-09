@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class bookrequest extends FormRequest
+class updatememberRequst extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,19 +19,14 @@ class bookrequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    
+    // name	email	addrass	whatsapp	statues	membership_date
     public function rules(): array
     {
         return [
-            'title'=>'required|string|max:20|min:4',
-            'isbn'=>'nullable|string',
-            'description'=>'string|nullable',
-            'author'=>'required|exists:authores,id',
-            'genra'=>'string|nullable',
-            'avalible_copies'=>'required|integer',
-            'tottle_copies'=>'required|integer',
-            'published_at'=>'date|required',
-            'cover_imges'=>'string|required'
+            'name'=>'string',
+            'email'=>'string',
+            'addrass'=>'string|max:10|min:40',
+            'whatsapp'=>'string|max:10|min:10'
         ];
     }
 }
