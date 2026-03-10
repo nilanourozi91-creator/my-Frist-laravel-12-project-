@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class memberRquest extends FormRequest
+class BorrowingRequest extends FormRequest
 {
-    // name	email	addrass	whatsapp	statues	membership_date
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,10 +22,12 @@ class memberRquest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|max:25|min:3|string',
-            'email'=>'required|string|max:20|min:10',
-            'addrass'=>'|max:25|min:10|string',
-            'whatsapp'=>'required|max:10|min:10',
-        ];
+            'book_id'=>'required|exists:barrowings,book_id',
+            'member_id'=>'required|exists:barrowings,member_id',
+            'borrowed_at'=>'required:date',
+            'returned_at'=>'required:date|after:dated_at',
+
+                   ];
+
     }
 }

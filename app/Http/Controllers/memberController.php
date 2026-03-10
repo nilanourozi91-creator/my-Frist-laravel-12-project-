@@ -25,10 +25,14 @@ class memberController extends Controller
      */
     public function store(memberRquest $request)
     {
-       $member= member::created($request->validated());
-        return new memberRsoures($member);
-        //
-    }
+         
+    $author = member::create($request->validated());
+
+    return memberRsoures::collection($author);
+    
+
+        
+}
 
     /**
      * Display the specified resource.

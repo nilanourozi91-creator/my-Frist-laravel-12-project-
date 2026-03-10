@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->default('aninimas');
             $table->text('addrass');
             $table->string('whatsapp')->nullable();
             $table->enum('statues',['active','unactive'])->default('active');

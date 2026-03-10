@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthorInsertRequest;
+use App\Http\Requests\bookrequest;
 use App\Http\Resources\authorResours;
+use App\Http\Resources\BorrowingResource;
 use App\Models\authore;
 use App\Models\barrowing;
+use App\Models\book;
+use App\Models\member;
 use Illuminate\Http\Request;
 
 class barrowingsController extends Controller
@@ -13,15 +17,17 @@ class barrowingsController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
-    {
-        $baro=barrowing::all();
-        return response()->json(
-            [
-                'res'=>$baro
-            ]
-        );
-    }
+{
+    $response = member::with('book','member')->get();
+    return BorrowingResource::collection($response);
+}
+    // public function index(bookrequest $request)
+    // {
+    //     $respone=barrowing::with('books','member')->get();
+    //     return BorrowingResource::collection($respone);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +45,7 @@ class barrowingsController extends Controller
     {
        $respon =authore::findOrFail($id);
         // return new authorResours($respon);
-        return new AuthorInsertRequest($respon);
+        return new authorResours($respon);
     }
 
     /**
@@ -62,6 +68,10 @@ class barrowingsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+      $barp=authore::findOrfail($id);
+      $barp::delete();
+      return response()->json([
+        'delete'=>$barp,
+      ]);
     }
 }

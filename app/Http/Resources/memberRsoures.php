@@ -13,6 +13,18 @@ class memberRsoures extends JsonResource
      *
      * @return array<string, mixed>
      */
+
+        //  $table->id();
+        //     $table->string('name');
+        //     $table->string('email');
+        //     $table->text('addrass');
+        //     $table->string('whatsapp')->nullable();
+        //     $table->enum('statues',['active','unactive'])->default('active');
+        //     $table->date('membership_date')->default(now());
+        //     $table->timestamps();
+
+
+
     public function toArray(Request $request): array
     {
         return [
@@ -20,7 +32,7 @@ class memberRsoures extends JsonResource
             'email'=>$this->email,
             'addrass'=>$this->addrass,
             'whatsapp'=>$this->whatsapp,
-            'statuse'=>$this->statuse,
+            'statuse'=>$this->statues,
             'membership_date'=>$this->membership_date,
         ];
     }

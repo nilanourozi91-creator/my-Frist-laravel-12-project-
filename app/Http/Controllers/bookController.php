@@ -13,33 +13,33 @@ class bookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(request $request)
     {
-       $allbooks= book::with('author');
-       return  bookresours::collection($allbooks);
-    }
+    $Qurrry = Book::with('author');
 
+if ($request->has('search')) {
+    $search = $request->search;
+
+    $Qurrry->where(function ($books) use ($search) {
+        $books->where('title', 'like', "%{$search}%")
+            ->orWhere('isbn', 'like', "%{$search}%")
+            ->orWhereHas('author', function ($authorQ) use ($search) {
+                $authorQ->where('name', 'like', "%{$search}%");
+            });
+    });
+}
+
+$books = $Qurrry->get();
+
+return bookresours::collection($books);
+    }
     /**
      * Store a newly created resource in storage.
      */
     public function store(bookrequest $request)
     {
         $sbooks=book::created($request);
-        // return bookresours
-        // return response()->json([
-        //     'title'=>$request->title,
-        //     'isbn'=>$request->isbn,
-        //     'description'=>$request->description,
-        //     'author'=>new authorResours($request->whenLoaded("authore")),
-        //     'genra'=>$request->genra,
-        //     'avalible_copies'=>$request->avalible_copies,
-        //     'tottle_copies'=>$request->tottle_copies,
-        //     'published_at'=>$request->published_at,
-        //     'cover_imges'=>$request->cover_imges,
-        //     'statuse'=>$request->statuse
-        // ]);
-        return new bookresours($sbooks);
-        // $sbooks::load('author');
+        return  bookresours::collection($sbooks);
 
     }
 
