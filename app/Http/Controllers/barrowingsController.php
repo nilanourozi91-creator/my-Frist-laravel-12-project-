@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthorInsertRequest;
 use App\Http\Requests\bookrequest;
+use App\Http\Requests\BorrowingRequest;
 use App\Http\Resources\authorResours;
+use App\Http\Resources\bookresours;
 use App\Http\Resources\BorrowingResource;
 use App\Models\authore;
 use App\Models\barrowing;
 use App\Models\book;
 use App\Models\member;
 use Illuminate\Http\Request;
+
+use function Symfony\Component\Clock\now;
 
 class barrowingsController extends Controller
 {
@@ -20,27 +24,48 @@ class barrowingsController extends Controller
 
     public function index()
 {
-    $response = member::with('book','member')->get();
+    $response = book::with('member')->get();
     return BorrowingResource::collection($response);
 }
-    // public function index(bookrequest $request)
-    // {
-    //     $respone=barrowing::with('books','member')->get();
-    //     return BorrowingResource::collection($respone);
-    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AuthorInsertRequest $request)
-    {
-       $respone= authore::created($request->validated());
-       return authorResours::collection($respone);
+    public function store(BorrowingRequest $request){
+        $book=book::findOrFail($request->book_id);
+        if ($book->avalible_copies>0) {
+           $bo= barrowing::create($request->validated());
+           $bo->load(['member','book']);
+           $bo->book->barrow();
+           return new bookresours($bo);
+
+        }
+    }
+    public function returnedbook(barrowing $request){
+        if ($request->stutas!=="barrowed") {
+            return response()->json([
+                'respone'=>'book is been locked',
+            ]);
+        }
+    $request->update([
+        'bring_date'=>now(),
+        'stutas'=>'returned'
+
+    ]);
+    
+      $request->book-> returnbook();
+      $request->load(['book','barrrow']);
+      return new bookresours($request);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    //returned books
+    public function overdue(){
+        $b=barrowing::with('book','member')->when('stutas',"barrowed")->orWhere('due_date','<',now())->get();
+         barrowing::where('stutas','barrowed')->orWhere('due_date','<',now())->update(['stutas'=>'overdue']);
+           return BorrowingResource::collection($b);
+         }
+
+
     public function show(string $id)
     {
        $respon =authore::findOrFail($id);
@@ -60,6 +85,7 @@ class barrowingsController extends Controller
                 'update'=>$auth
             ]
         );
+      
 
     }
 
