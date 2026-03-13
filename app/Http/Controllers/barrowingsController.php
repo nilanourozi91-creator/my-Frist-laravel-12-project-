@@ -60,8 +60,8 @@ class barrowingsController extends Controller
 
     //returned books
     public function overdue(){
-        $b=barrowing::with('book','member')->when('stutas',"barrowed")->orWhere('due_date','<',now())->get();
-         barrowing::where('stutas','barrowed')->orWhere('due_date','<',now())->update(['stutas'=>'overdue']);
+        $b=barrowing::with('book','member')->when('stutas',"barrowed")->Where('due_date','<',now())->get();
+         barrowing::where('stutas','barrowed')->Where('due_date','<',now())->update(['stutas'=>'overdue']);
            return BorrowingResource::collection($b);
          }
 

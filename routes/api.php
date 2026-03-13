@@ -12,7 +12,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 route::apiResource('author' , AuthoreController::class);
 route::apiResource('bro', barrowingsController::class)->only('index','store','show');
-route::post('bro/{bro_id}/return',[barrowingsController::class,'returnedbook']);
+route::post('bro/{request}/return',[barrowingsController::class,'returnedbook']);
 route::get('bro/{bro_id}/return',[barrowingsController::class,'overdue']);
 // route::post('bro/{bro_id}/return',[barrowingsController::class,'overdue']);
 Route::apiResource('books',bookController::class);
