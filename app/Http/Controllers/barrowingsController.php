@@ -24,7 +24,7 @@ class barrowingsController extends Controller
 
     public function index()
 {
-    $response = book::with('member')->get();
+    $response = barrowing::all();
     return BorrowingResource::collection($response);
 }
 
@@ -54,8 +54,9 @@ class barrowingsController extends Controller
     ]);
     
       $request->book-> returnbook();
-      $request->load(['book','barrrow']);
-      return new bookresours($request);
+    //   $request->load(['book','barrows']);
+     return new bookresours($request);
+      
     }
 
     //returned books
@@ -68,9 +69,8 @@ class barrowingsController extends Controller
 
     public function show(string $id)
     {
-       $respon =authore::findOrFail($id);
-        // return new authorResours($respon);
-        return new authorResours($respon);
+       $respon =barrowing::findOrFail($id);
+        return new BorrowingResource($respon);
     }
 
     /**

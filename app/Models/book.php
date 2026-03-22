@@ -26,6 +26,9 @@ class book extends Model
     public function barrow(){
         return $this->hasMany(barrowing::class, 'book_id');
     }
+      public function book_id(){
+        return $this->hasMany(barrowing::class, 'member_id');
+    }
     public function isAvelible(){
         return $this->avalible_copies>0;
     }
