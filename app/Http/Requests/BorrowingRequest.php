@@ -25,9 +25,7 @@ class BorrowingRequest extends FormRequest
             'book_id'=>'required|exists:barrowings,book_id',
             'member_id'=>'required|exists:barrowings,member_id',
             'borrowed_at'=>'required:date',
-            'returned_at'=>'required:date|after:dated_at',
-
-                   ];
+            ];
 
     }
 }

@@ -12,7 +12,9 @@ use App\Models\authore;
 use App\Models\barrowing;
 use App\Models\book;
 use App\Models\member;
+use Exception;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 
 use function Symfony\Component\Clock\now;
 
@@ -32,14 +34,26 @@ class barrowingsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(BorrowingRequest $request){
-        $book=book::findOrFail($request->book_id);
+        try {
+             $book=book::FindOrFail($request->book_id);
         if ($book->avalible_copies>0) {
            $bo= barrowing::create($request->validated());
+            $bo->barrow();
            $bo->load(['member','book']);
-           $bo->book->barrow();
            return new bookresours($bo);
 
         }
+        else{
+            'you got wrong';
+        }
+        } catch (Exception $error) {
+            return response()->json(
+                [
+                   'Failmasssege'=>$error->getMessage()
+                ]
+            );
+        }
+       
     }
     public function returnedbook(barrowing $request){
         if ($request->stutas!=="barrowed") {

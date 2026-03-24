@@ -16,11 +16,10 @@ class BorrowingResource extends JsonResource
     {
         return [
                  'id'=>$this->id,
-                 'name'=>$this->name,
                  'book_id'=>$this->book_id,
+                 'name'=>$this->name,
                  'member_id'=>$this->member_id,
                  'borrowed_at'=>$this->brrowed_at,
-                 'returned_at'=>$this->returned_at,
         ];
     }
 }

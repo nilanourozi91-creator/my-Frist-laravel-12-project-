@@ -22,9 +22,17 @@ class authRequest extends FormRequest
     public function rules(): array
     {
         return [
-                  'name'=>'required|max:3|min:25',
+            'name'=>'required|max:3|min:25',
             'email'=>'string|required|unique:users,email',
             'password'=>'min:6|max:20|confirmed',
         ];
+        
+    }
+    public function messages()
+    {
+        return parent::messages([
+            'name|required'=>'the name is required',
+            'name|min:3'=>'the name is should be at least 3 cheracter',
+        ]);
     }
 }

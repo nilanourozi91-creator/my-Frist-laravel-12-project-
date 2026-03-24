@@ -15,6 +15,9 @@ class bookController extends Controller
      */
     public function index(request $request)
     {
+        if (!$request->user()->tokenCan('read-book')) {
+            abort('403','you not allow to this route');
+        }
     $Qurrry = Book::with('author');
 
 if ($request->has('search')) {
@@ -38,6 +41,8 @@ return bookresours::collection($books);
      */
     public function store(bookrequest $request)
     {
+        if (!$request->user()->tokenCan('insert-book'));
+            abort('303','you are not allowed to insert-book');
         $sbooks=book::created($request);
         return  bookresours::collection($sbooks);
 
@@ -57,6 +62,8 @@ return bookresours::collection($books);
      */
     public function update(bookrequest $request, string $id)
     {
+        if (!$request->user()->tokenCan('update-book')) 
+          abort('304','you are not allow to update the book please chack your are login in our system before');
       $updatebook=book::FindOrFail($id);
       $updatebook::update($request->validated());
       return response()->json(
@@ -69,8 +76,9 @@ return bookresours::collection($books);
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id,Request $request){
+        if(!$request->user()->tokenCan('delete-book'));
+        abort('307','please chack your are login in our system before');
         $deletebook=book::FindOrFail($id);
         $deletebook->delete();
         return response()->json([

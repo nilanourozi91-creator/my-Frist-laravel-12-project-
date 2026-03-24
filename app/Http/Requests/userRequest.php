@@ -30,4 +30,10 @@ class userRequest extends FormRequest
             'password'=>'string|confirmed',
         ];
     }
+    // public function messege(){
+    //     return[
+    //        'name|required:'=>'the name is reqired',
+    //        'name|min:3'=>'the name should be at least 3 chrecters'
+    //     ];
+    // }
 }
